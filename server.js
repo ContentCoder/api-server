@@ -1,7 +1,7 @@
 /* 
  * server.js 
  * 
- * Portal server.
+ * API server.
  * 
  * version: 0.0.1
  * create date: 2014.3.25
@@ -40,7 +40,7 @@ http.createServer(function(req, res) {
     return;
   }
 }).listen(port);
-util.log(util.format('Portal server running at %d port...', port));
+util.log(util.format('API server running at %d port...', port));
 
 /* 
  * Image thumbnail route.
