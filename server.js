@@ -17,6 +17,7 @@ var util    = require('util'),
     crypto  = require('crypto'),
 		aws     = require('aws-sdk'),
 		uit     = require(path.join(__dirname, 'modules/url-image-thumbnail/url-thumbnail.js'));
+		quotes	= require(path.join(__dirname, 'modules/quotes/quotes.js'));
 
 // load configuration
 var config  = require(path.join(__dirname, 'config.json'));
@@ -35,6 +36,9 @@ http.createServer(function(req, res) {
   case 'GET/image/thumbnail':
     getImageThumbnail(req, res);
     return;
+	case 'GET/quotes':
+		getQuotes(req, res);
+		return;
   default:
     responseJSON(res, 404, {message: '404 Not Found'});
     return;
@@ -122,6 +126,26 @@ function getImageThumbnail(req, res) {
 			});   // dynamodb.putItem	
 		});		// uit.thumbnailObject		
 	});		// authenticate 
+}
+
+/* 
+ * Quotes route.
+ * 
+ * Request: 
+ *	Method: GET
+ *	Path: /quotes
+ * 
+ * Response: 
+ *	
+ */
+function getQuotes(req, res) {
+	quotes.random(function(err, quote) {
+		if (err) {
+			responseJSON(res, 500, err);
+		} else {
+			response(res, 200, quote);
+		}
+	});		// quotes.random
 }
 
 function responseJSON(res, statusCode, msg) {
