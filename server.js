@@ -143,7 +143,7 @@ function getQuotes(req, res) {
 		if (err) {
 			responseJSON(res, 500, err);
 		} else {
-			response(res, 200, quote);
+			responseJSON(res, 200, quote);
 		}
 	});		// quotes.random
 }
