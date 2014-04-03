@@ -24,7 +24,6 @@ function responseJSON(res, statusCode, msg) {
   res.writeHead(statusCode, headers);
   res.end(JSON.stringify(msg));
   util.log(JSON.stringify(msg));
-  return;
 }
 
 function responseDynamoDBItem(res, table, key) {
@@ -83,7 +82,7 @@ function responseS3ObjectUrl(res, bucket, key) {
       if (Grants[i].Grantee.DisplayName == 'Everyone' && 
           Grants[i].Grantee.Permission == "READ") {
         var msg = {};
-        msg.url = config.S3UrlRoot + '/' + bucket + '/' + key;
+        msg.url = config.S3URLROOT + '/' + bucket + '/' + key;
         responseJSON(res, 200, msg);
         return;
       }

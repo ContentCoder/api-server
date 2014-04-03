@@ -6,15 +6,13 @@
 
 exports.authenticate = authenticate;
 
-var util    = require('util'),
-		path    = require('path'),
-    crypto  = require('crypto'),
-    aws     = require('aws-sdk');
+var util   = require('util'),
+    path   = require('path'),
+    crypto = require('crypto'),
+    aws    = require('aws-sdk'), 
 
-// load configuration
-var config  = require(path.join(__dirname, 'config.json'));
+    config = require(path.join(__dirname, 'config.json'));
 
-// aws init
 aws.config.loadFromPath(path.join(__dirname, 'awsconfig.json'));
 var dynamodb = new aws.DynamoDB();
 
