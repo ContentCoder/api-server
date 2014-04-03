@@ -22,7 +22,6 @@ function getRandomQuote(req, res) {
   var monthStr  = month < 10 ? '0' + month.toString() : month.toString();
   var dateStr   = date < 10 ? '0' + date.toString() : date.toString();
   var queryStr  = monthStr + dateStr;
-  util.log('Date: ' + queryStr);
   
   var key = {};
   key.Date = {S: queryStr};

@@ -8,6 +8,7 @@ exports.getThumbnail = getThumbnail;
 
 var util = require('util'), 
     path = require('path'), 
+    aws  = require('aws-sdk'), 
 		
     config   = require(path.join(__dirname, '../config.json')),
     response = require(path.join(__dirname, '../response.js')),
@@ -16,7 +17,7 @@ var util = require('util'),
 		uc = require(path.join(__dirname, '../modules/s3-url-cache/url-cache.js')), 
     tc = require(path.join(__dirname, '../modules/image-thumbnail-cache/thumbnail-cache.js'));
 
-aws.config.loadFromPath(path.join(__dirname, 'awsconfig.json'));
+aws.config.loadFromPath(path.join(__dirname, '../awsconfig.json'));
 var dynamodb = new aws.DynamoDB();
 
 /* 

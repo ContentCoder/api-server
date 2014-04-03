@@ -4,18 +4,17 @@
  * API server.
  */
 
-var util	= require('util'),
-    path	= require('path'),
-    http	= require('http'),
-    url		= require('url'), 
+var util = require('util'),
+    path = require('path'),
+    http = require('http'),
+    url	 = require('url'), 
 
-		config		= require(path.join(__dirname, 'config.json')), 
-		response	= require(path.join(__dirname, 'response.js')),
+		config   = require(path.join(__dirname, 'config.json')), 
+		response = require(path.join(__dirname, 'response.js')),
  
-		image		= require(path.join(__dirname, 'routes/image.js')), 
-		encode	= require(path.join(__dirname, 'routes/encode.js')), 
-		quote		= require(path.join(__dirname, 'routes/quote.js'));
-    s3Image = require(path.join(__dirname, 'routes/s3-image.js'));
+		image	 = require(path.join(__dirname, 'routes/image.js')), 
+		encode = require(path.join(__dirname, 'routes/encode.js')), 
+		quote	 = require(path.join(__dirname, 'routes/quote.js'));
 
 util.log(JSON.stringify(config, null, 2));
 
@@ -37,12 +36,9 @@ http.createServer(function(req, res) {
 	case 'GET/encode/status':
 		encode.getStatus(req, res);
 		return;
-	case 'GET/quote':
-		quote.getQuote(req, res);
+	case 'GET/quote/random':
+		quote.getRandom(req, res);
 		return;
-  case 'GET/s3/image/thumbnail':
-		s3Image.getThumbnail(req, res);
-    return;
   default:
     response.json(res, 404, {message: '404 Not Found'});
     return;
