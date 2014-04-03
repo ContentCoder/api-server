@@ -67,10 +67,9 @@ function getThumbnail(req, res) {
     thumbnail(req.parsedUrl.query.url, options, function(err, data) {
       if (err) {
         response.json(res, 500, err);
-        return;
+      } else {
+        response.s3Object(res, data.ThumbBucket.S, data.ThumbKey.S);
       }
-
-      response.s3Object(res, data.ThumbBucket.S, data.ThumbKey.S);
 
       var item = {};
       item.TableName = config.THUMBTABLE;
@@ -84,6 +83,8 @@ function getThumbnail(req, res) {
         item.Item.Height = {N: req.parsedUrl.query.height.toString()};
       if (req.parsedUrl.query.crop)
         item.Item.Crop   = {S: req.parsedUrl.query.crop};
+      if (err) 
+        item.Item.Error  = {S: JSON.stringify(err)};
       dynamodb.putItem(item, function(err, data) {
         if (err) {
           util.log(JSON.stringify(err, null, 2));
