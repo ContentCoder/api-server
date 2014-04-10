@@ -9,12 +9,13 @@ var util = require('util'),
     http = require('http'),
     url	 = require('url'), 
 
-    config	 = require(path.join(__dirname, 'config.json')), 
+    config   = require(path.join(__dirname, 'config.json')), 
     response = require(path.join(__dirname, 'response.js')),
  
-    image	 = require(path.join(__dirname, 'routes/image.js')), 
+    image  = require(path.join(__dirname, 'routes/image.js')), 
     encode = require(path.join(__dirname, 'routes/encode.js')), 
-    quote	 = require(path.join(__dirname, 'routes/quote.js')); 
+    quote  = require(path.join(__dirname, 'routes/quote.js')), 
+    clockbeauty = require(path.join(__dirname, 'routes/clock-beauty.js')); 
 
 util.log(JSON.stringify(config, null, 2));
 
@@ -27,18 +28,21 @@ http.createServer(function(req, res) {
   case 'GET/image/thumbnail':
     image.getThumbnail(req, res);
     return;
-	case 'POST/encode/start':
-		encode.postStart(req, res);
-		return;
-	case 'POST/encode/stop':
-		encode.postStop(req, res);
-		return;
-	case 'GET/encode/status':
-		encode.getStatus(req, res);
-		return;
-	case 'GET/quote/random':
-		quote.getRandom(req, res);
-		return;
+  case 'POST/encode/start':
+    encode.postStart(req, res);
+    return;
+  case 'POST/encode/stop':
+    encode.postStop(req, res);
+    return;
+  case 'GET/encode/status':
+    encode.getStatus(req, res);
+    return;
+  case 'GET/quote/random':
+    quote.getRandom(req, res);
+    return;
+  case 'GET/clockbeauty/random': 
+    clockbeauty.getRandom(req, res);
+    return;
   default:
     response.json(res, 404, {message: '404 Not Found'});
     return;
