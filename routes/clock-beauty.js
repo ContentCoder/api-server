@@ -19,19 +19,20 @@ function now(req, res) {
   util.log('minute: ' + min);
   
   var key = {};
-  key.Minute = {N: min};
+  key.Minute = {N: min.toString()};
   response.dynamoDBItem(res, config.CLOCKBEAUTYTABLE, key);
 }
 
 function next(req, res) {
-  var min = 0;
-  if (req.parsedUrl.query.current >= 0 && 
-      req.parsedUrl.query.current < 59) 
-    min = req.parsedUrl.query.current + 1;
+  var min = parseInt(req.parsedUrl.query.current);
+  if (min >= 0 && min < 59) 
+    min = min + 1;
+  else 
+    min = 0;
   util.log('minute: ' + min);
 
   var key = {};
-  key.Minute = {N: min};
+  key.Minute = {N: min.toString()};
   response.dynamoDBItem(res, config.CLOCKBEAUTYTABLE, key);
 }
 
