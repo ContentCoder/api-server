@@ -40,9 +40,12 @@ http.createServer(function(req, res) {
   case 'GET/quote/random':
     quote.getRandom(req, res);
     return;
-  case 'GET/clockbeauty/random': 
-    clockbeauty.getRandom(req, res);
+  case 'GET/clockbeauty/now': 
+    clockbeauty.getNow(req, res);
     return;
+  case 'GET/clockbeauty/next':
+    clockbeauty.getNext(req, res);
+    return; 
   default:
     response.json(res, 404, {message: '404 Not Found'});
     return;

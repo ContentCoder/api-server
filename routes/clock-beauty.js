@@ -4,7 +4,8 @@
  * Clock beauty routes.
  */
 
-exports.getRandom = getRandom;
+exports.getNow  = now;
+exports.getNext = next;
 
 var util = require('util'),
     path = require('path'),
@@ -12,14 +13,26 @@ var util = require('util'),
     config   = require(path.join(__dirname, '../config.json')),
     response = require(path.join(__dirname, '../response.js'));
 
-function getRandom(req, res) {
-  var r = Math.floor(Math.random() * 12);
-  var clock = r < 10 ? '0' + r.toString() : r.toString();
-  clock = clock + '00';
-  util.log('clock: ' + clock);
-
+function now(req, res) {
+  var now = new Date();
+  var min = now.getMinutes();
+  util.log('minute: ' + min);
+  
   var key = {};
-  key.Clock = {S: clock};
+  key.Minute = {N: min};
   response.dynamoDBItem(res, config.CLOCKBEAUTYTABLE, key);
 }
+
+function next(req, res) {
+  var min = 0;
+  if (req.parsedUrl.query.current >= 0 && 
+      req.parsedUrl.query.current < 59) 
+    min = req.parsedUrl.query.current + 1;
+  util.log('minute: ' + min);
+
+  var key = {};
+  key.Minute = {N: min};
+  response.dynamoDBItem(res, config.CLOCKBEAUTYTABLE, key);
+}
+
 
