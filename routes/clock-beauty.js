@@ -4,8 +4,10 @@
  * Clock beauty routes.
  */
 
-exports.getNow  = now;
-exports.getNext = next;
+exports.getFlip   = flip;
+exports.getNow    = now;
+exports.getRandom = random;
+exports.putLike   = like;
 
 var util = require('util'),
     path = require('path'),
@@ -13,27 +15,36 @@ var util = require('util'),
     config   = require(path.join(__dirname, '../config.json')),
     response = require(path.join(__dirname, '../response.js'));
 
+function flip(req, res) {
+  var timeline = parseInt(req.parsedUrl.query.timeline);
+  var now = new Date().getMinutes();
+  if (now != timeline) {
+    now(req, res);
+  } else {
+    random(req, res);
+  }
+}
+
 function now(req, res) {
-  var now = new Date();
-  var min = now.getMinutes();
-  util.log('minute: ' + min);
+  var min = new Date().getMinutes();
+  util.log('now minute: ' + min);
   
   var key = {};
   key.Minute = {N: min.toString()};
   response.dynamoDBItem(res, config.CLOCKBEAUTYTABLE, key);
 }
 
-function next(req, res) {
-  var min = parseInt(req.parsedUrl.query.current);
-  if (min >= 0 && min < 59) 
-    min = min + 1;
-  else 
-    min = 0;
-  util.log('minute: ' + min);
+function random(req, res) {
+  var min = Math.floor(Math.random() * 60);
+  util.log('random minute: ' + min);
 
   var key = {};
   key.Minute = {N: min.toString()};
   response.dynamoDBItem(res, config.CLOCKBEAUTYTABLE, key);
 }
 
+function like(req, res) {
+  response.json(res, 403, {message: '403 Forbidden'});
+  return;
+}
 
