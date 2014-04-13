@@ -17,8 +17,10 @@ var util = require('util'),
 
 function flip(req, res) {
   var timeline = parseInt(req.parsedUrl.query.timeline);
-  var now = new Date().getMinutes();
-  if (now != timeline) {
+  util.log('timeline: ' + timeline);
+  var current = new Date().getMinutes();
+  util.log('current: ' + current);
+  if (current != timeline) {
     now(req, res);
   } else {
     random(req, res);

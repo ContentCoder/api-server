@@ -41,7 +41,7 @@ http.createServer(function(req, res) {
     quote.getRandom(req, res);
     return;
   case 'GET/clockbeauty/flip': 
-    clockbeauty.getNow(req, res);
+    clockbeauty.getFlip(req, res);
     return;
   default:
     response.json(res, 404, {message: '404 Not Found'});
