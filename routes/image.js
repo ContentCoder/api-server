@@ -5,6 +5,7 @@
  */
 
 exports.getThumbnail = getThumbnail;
+exports.getThumbnailFormSubmit = getFormSubmit;
 
 var util = require('util'), 
     path = require('path'), 
@@ -114,5 +115,10 @@ function thumbnail(imageUrl, options, callback) {
       callback(null, cachedThumbItem);
     });   
   });   
+}
+
+function getFormSubmit(req, res) {
+  req.parsedUrl.query.apikey = config.FORMSUBMITKEY;
+  getThumbnail(req, res);
 }
 
