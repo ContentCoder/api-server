@@ -119,6 +119,8 @@ function thumbnail(imageUrl, options, callback) {
 
 function getFormSubmit(req, res) {
   req.parsedUrl.query.apikey = config.FORMSUBMITKEY;
+  if (req.parsedUrl.query.crop == 'None') 
+    req.parsedUrl.query.crop = null;
   getThumbnail(req, res);
 }
 

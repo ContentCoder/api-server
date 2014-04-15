@@ -30,6 +30,7 @@ http.createServer(function(req, res) {
     return;
   case 'GET/image/thumbnail/formsubmit':
     image.getThumbnailFormSubmit(req, res);
+    return;
   case 'POST/encode/start':
     encode.postStart(req, res);
     return;
